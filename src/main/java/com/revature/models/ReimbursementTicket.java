@@ -3,13 +3,15 @@ package com.revature.models;
 public class ReimbursementTicket {
         private int reimbursementID;
         private int employeeID;
+        private int financeManagerID;
         private String reimbursementStatus;
         private double reimbursementAmount;
         private String reimbursementCategory;
 
-        public ReimbursementTicket(int reimbursementID, int employeeID, String reimbursementStatus, double reimbursementAmount, String reimbursementCategory) {
+        public ReimbursementTicket(int reimbursementID, int employeeID, int financeManagerID, String reimbursementStatus, double reimbursementAmount, String reimbursementCategory) {
                 this.reimbursementID = reimbursementID;
                 this.employeeID = employeeID;
+                this.financeManagerID = financeManagerID;
                 this.reimbursementStatus = reimbursementStatus;
                 this.reimbursementAmount = reimbursementAmount;
                 this.reimbursementCategory = reimbursementCategory;
@@ -29,6 +31,14 @@ public class ReimbursementTicket {
 
         public void setEmployeeID(int employeeID) {
                 this.employeeID = employeeID;
+        }
+
+        public int getFinanceManagerID() {
+                return financeManagerID;
+        }
+
+        public void setFinanceManagerID(int financeManagerID) {
+                this.financeManagerID = financeManagerID;
         }
 
         public String getReimbursementStatus() {

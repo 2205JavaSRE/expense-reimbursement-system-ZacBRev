@@ -29,17 +29,17 @@ public class AuthenticationController {
 
     }
 
-    public static boolean verifyEmployee (Context context) {
+    public static Employee verifyEmployee (Context context) {
 
         Employee employee = context.sessionAttribute("Employee");
 
-        if (employee == null) return false;
-        else return true;
-
+        if (employee == null) return null;
+        else return employee;
     }
 
     public static boolean logout (Context context) {
-        if (verifyEmployee(context)) {
+        Employee employee = verifyEmployee(context);
+        if (employee != null) {
             context.consumeSessionAttribute("Employee");
             context.result("Session consumed");
             context.status(HttpStatus.OK_200);
