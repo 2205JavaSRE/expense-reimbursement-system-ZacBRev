@@ -9,12 +9,12 @@ public class RequestMapping {
     public static void configureRoutes(Javalin app) {
 
         app.post("/login", context -> {
-            AuthenticationController.authenticateByFormParam(context);
+            AuthenticationController.authenticateLogin(context);
         });
-//
-//        app.get("", context -> {
-//
-//        });
+
+        app.get("/logout", context -> {
+            AuthenticationController.logout(context);
+        });
 //
 //        app.get("", context -> {
 //
