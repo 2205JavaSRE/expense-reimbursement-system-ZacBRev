@@ -8,33 +8,19 @@ public class RequestMapping {
 
     public static void configureRoutes(Javalin app) {
 
-        app.post("/api/login", context -> {
-            AuthenticationController.authenticateLogin(context);
-        });
+        app.post("/api/login", AuthenticationController::authenticateLogin);
 
-        app.get("/api/logout", context -> {
-            AuthenticationController.logout(context);
-        });
+        app.get("/api/logout", AuthenticationController::logout);
 
-        app.post("/api/submit-reimbursement-ticket", context -> {
-            ReimbursementTicketController.submitReimbursementTicket(context);
-        });
-//
-//        app.get("", context -> {
-//
-//        });
-//
-//        app.get("", context -> {
-//
-//        });
-//
-//        app.get("", context -> {
-//
-//        });
-//
-//        app.get("", context -> {
-//
-//        });
+        app.post("/api/employee/submit-reimbursement-ticket", ReimbursementTicketController::submitReimbursementTicket);
+
+        app.get("/api/employee/view-reimbursement-tickets", ReimbursementTicketController::viewOwnReimbursementTickets);
+
+        app.get("/api/manager/view-all-reimbursement-tickets", ReimbursementTicketController::viewAllReimbursementTickets);
+
+        app.get("/api/manager/view-{status}-reimbursement-tickets", ReimbursementTicketController::viewReimbursementTicketsByStatus);
+
+        app.post("/api/manager/update-reimbursement-tickets", ReimbursementTicketController::updateReimbursementTicket);
 
     }
 

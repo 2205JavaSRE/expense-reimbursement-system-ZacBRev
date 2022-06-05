@@ -62,7 +62,7 @@ public class ReimbursementTicketDao implements ReimbursementTicketDaoInterface {
     @Override
     public List<ReimbursementTicket> getReimbursementByStatus(String status) {
         PooledConnection connection = ConnectionFactory.getConnection();
-        String sql = "SELECT * FROM reimbursementTicket WHERE status = ?";
+        String sql = "SELECT * FROM reimbursementTicket WHERE status iLIKE ?";
         List<ReimbursementTicket> reimbursementTicketList = new ArrayList<>();
 
 
@@ -88,15 +88,13 @@ public class ReimbursementTicketDao implements ReimbursementTicketDaoInterface {
     }
 
     @Override
-    public List<ReimbursementTicket> getAllReimbursementTickets(int limit) {
+    public List<ReimbursementTicket> getAllReimbursementTickets() {
         PooledConnection connection = ConnectionFactory.getConnection();
-        String sql = "SELECT * FROM reimbursementTicket LIMIT ?;";
+        String sql = "SELECT * FROM reimbursementTicket;";
         List<ReimbursementTicket> reimbursementTicketList = new ArrayList<>();
 
 
         try (PreparedStatement ps = connection.getConnection().prepareStatement(sql)) {
-            ps.setInt(1, limit);
-
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -111,24 +109,21 @@ public class ReimbursementTicketDao implements ReimbursementTicketDaoInterface {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return null;
+        return reimbursementTicketList;
     }
 
     @Override
-    public void updateReimbursementStatus(ReimbursementTicket rt) {
+    public void updateReimbursementStatus(int reimbursementTicketID,  int managerID, String status) {
         PooledConnection connection = ConnectionFactory.getConnection();
-        String sql = "UPDATE reimbursementTicket SET status = ?, finance_manager id = ? WHERE reimbursement_id = ?;";
+        String sql = "UPDATE reimbursementTicket SET status = ?, finance_manager_id = ? WHERE reimbursement_id = ?;";
 
         try (PreparedStatement ps = connection.getConnection().prepareStatement(sql)) {
-            ps.setString(1, rt.getReimbursementStatus());
-            ps.setInt(2, rt.getFinanceManagerID());
-            ps.setInt(3, rt.getReimbursementID());
+            ps.setString(1, status);
+            ps.setInt(2, managerID);
+            ps.setInt(3, reimbursementTicketID);
             ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 }

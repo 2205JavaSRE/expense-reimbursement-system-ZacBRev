@@ -12,9 +12,8 @@ public interface ReimbursementTicketDaoInterface {
 
     List<ReimbursementTicket> getReimbursementByStatus(String status);
 
-    List<ReimbursementTicket> getAllReimbursementTickets(int limit);
+    List<ReimbursementTicket> getAllReimbursementTickets();
 
-    void updateReimbursementStatus(ReimbursementTicket rt);
-
+    void updateReimbursementStatus(int reimbursementTicketID,  int managerID, String status);
 
 }
