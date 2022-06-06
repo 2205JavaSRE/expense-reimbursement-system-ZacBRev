@@ -36,7 +36,7 @@ public class MainDriver {
                 config -> {
                     config.registerPlugin(new MicrometerPlugin(registry));
                 }
-        ).start(8500);
+        ).start(7500);
 
         //Setting up the Request Mapping
         RequestMapping.configureRoutes(serverInstance, registry);
