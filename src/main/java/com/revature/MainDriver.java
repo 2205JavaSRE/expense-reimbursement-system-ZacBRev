@@ -1,7 +1,6 @@
 package com.revature;
 
 import com.revature.controller.RequestMapping;
-import com.revature.service.AuthenticationService;
 import io.javalin.Javalin;
 import io.javalin.plugin.metrics.MicrometerPlugin;
 import io.micrometer.core.instrument.binder.jvm.ClassLoaderMetrics;
@@ -41,7 +40,7 @@ public class MainDriver {
         ).start(8500);
 
         //Setting up the Request Mapping
-        RequestMapping.configureRoutes(serverInstance);
+        RequestMapping.configureRoutes(serverInstance, registry);
     }
 
 }
