@@ -22,6 +22,8 @@ public class MainDriver {
 
         PrometheusMeterRegistry registry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
 
+        registry.config().commonTags("application", "employeeReimburse");
+
         new ClassLoaderMetrics().bindTo(registry);
         new JvmMemoryMetrics().bindTo(registry);
         new JvmGcMetrics().bindTo(registry);
@@ -30,12 +32,9 @@ public class MainDriver {
         new ProcessorMetrics().bindTo(registry);
         new DiskSpaceMetrics(new File(System.getProperty("user.dir"))).bindTo(registry);
 
-        registry.config().commonTags("application", "Employee Reimbursement");
-
-
         Javalin serverInstance = Javalin.create(
-                javalinConfig -> {
-                    javalinConfig.registerPlugin(new MicrometerPlugin(registry));
+                config -> {
+                    config.registerPlugin(new MicrometerPlugin(registry));
                 }
         ).start(8500);
 
