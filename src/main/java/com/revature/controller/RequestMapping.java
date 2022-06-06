@@ -24,7 +24,7 @@ public class RequestMapping {
         app.post("/api/manager/update-reimbursement-tickets", ReimbursementTicketController::updateReimbursementTicket);
 
         app.get("/api/metrics", context -> {
-            registry.scrape();
+            context.result(registry.scrape());
         });
 
     }
