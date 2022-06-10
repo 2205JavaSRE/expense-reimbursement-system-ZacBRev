@@ -17,7 +17,11 @@ public class RequestMapping {
 
         app.get("/api/employee/view-reimbursement-tickets", ReimbursementTicketController::viewOwnReimbursementTickets);
 
+        app.get ("/api/employee/view-{status}-reimbursement-tickets", ReimbursementTicketController::viewEmployeeReimbursementTicketsByStatus);
+
         app.get("/api/manager/view-all-reimbursement-tickets", ReimbursementTicketController::viewAllReimbursementTickets);
+
+        app.get("/api/manager/view-employee-reimbursement-tickets/{id}", ReimbursementTicketController::viewReimbursementTicketsByUserID);
 
         app.get("/api/manager/view-{status}-reimbursement-tickets", ReimbursementTicketController::viewReimbursementTicketsByStatus);
 

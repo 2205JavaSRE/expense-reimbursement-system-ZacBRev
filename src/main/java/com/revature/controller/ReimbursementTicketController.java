@@ -91,6 +91,36 @@ public class ReimbursementTicketController {
         }
     }
 
+    public static void viewEmployeeReimbursementTicketsByStatus(Context context) {
+        Employee employee = AuthenticationController.verifyEmployee(context);
+        ReimbursementTicketService rbService = new ReimbursementTicketService();
+
+        if (employee != null) {
+            String status = context.pathParam("status");
+            List<ReimbursementTicket> rbList = rbService.getReimbursementTicketByStatus(status);
+            context.json(rbList);
+            context.status(HttpCode.ACCEPTED);
+        } else {
+            context.result("Unable to verify credentials while viewing reimbursement history.");
+            context.status(HttpStatus.FORBIDDEN_403);
+        }
+    }
+
+    public static void viewReimbursementTicketsByUserID(Context context) {
+        Employee employee = AuthenticationController.verifyEmployee(context);
+        ReimbursementTicketService rbService = new ReimbursementTicketService();
+
+        if (employee != null && employee.getPosition().equals("Finance Manager")) {
+            int id = Integer.parseInt(context.pathParam("id"));
+            List<ReimbursementTicket> rbList = rbService.getEmployeeReimbursementTickets(id);
+            context.json(rbList);
+            context.status(HttpCode.ACCEPTED);
+        } else {
+            context.result("Unable to verify credentials while viewing reimbursement history.");
+            context.status(HttpStatus.FORBIDDEN_403);
+        }
+    }
+
     public static void updateReimbursementTicket(Context context) {
         Employee employee = AuthenticationController.verifyEmployee(context);
         ReimbursementTicketService rbService = new ReimbursementTicketService();

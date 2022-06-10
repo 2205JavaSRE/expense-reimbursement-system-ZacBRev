@@ -31,6 +31,7 @@ public class ReimbursementTicketDao implements ReimbursementTicketDaoInterface {
         }
     }
 
+
     @Override
     public List<ReimbursementTicket> getReimbursementByEmployeeID(int employeeID) {
         PooledConnection connection = ConnectionFactory.getConnection();
@@ -68,6 +69,35 @@ public class ReimbursementTicketDao implements ReimbursementTicketDaoInterface {
 
         try (PreparedStatement ps = connection.getConnection().prepareStatement(sql)) {
             ps.setString(1, status);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ReimbursementTicket rt = new ReimbursementTicket(rs.getInt("reimbursement_id"),
+                        rs.getInt("employee_id"), rs.getInt("finance_manager_id"),
+                        rs.getString("status"), rs.getDouble("amount"),
+                        rs.getString("category"));
+
+                reimbursementTicketList.add(rt);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return reimbursementTicketList;
+    }
+
+    @Override
+    public List<ReimbursementTicket> getReimbursementByStatus(String status, int employeeID) {
+        PooledConnection connection = ConnectionFactory.getConnection();
+        String sql = "SELECT * FROM reimbursementTicket WHERE status iLIKE ? and employee_id = ?";
+        List<ReimbursementTicket> reimbursementTicketList = new ArrayList<>();
+
+
+        try (PreparedStatement ps = connection.getConnection().prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setInt(2, employeeID);
 
             ResultSet rs = ps.executeQuery();
 
