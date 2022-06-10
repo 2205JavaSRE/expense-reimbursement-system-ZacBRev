@@ -35,6 +35,12 @@ public class ReimbursementTicketService {
         return rbDao.getReimbursementByEmployeeID(employee.getEmployeeID());
     }
 
+    public List<ReimbursementTicket> getEmployeeReimbursementTickets(int employeeID) {
+        ReimbursementTicketDaoInterface rbDao = new ReimbursementTicketDao();
+        return rbDao.getReimbursementByEmployeeID(employeeID);
+    }
+
+
     public List<ReimbursementTicket> getAllReimbursementTickets() {
         ReimbursementTicketDaoInterface rbDao = new ReimbursementTicketDao();
         return rbDao.getAllReimbursementTickets();
@@ -44,6 +50,12 @@ public class ReimbursementTicketService {
         ReimbursementTicketDaoInterface rbDao = new ReimbursementTicketDao();
         return rbDao.getReimbursementByStatus(status);
     }
+
+    public List<ReimbursementTicket> getReimbursementTicketByStatus(String status, int employeeid) {
+        ReimbursementTicketDaoInterface rbDao = new ReimbursementTicketDao();
+        return rbDao.getReimbursementByStatus(status, employeeid);
+    }
+
 
     public void updateReimbursementTicket (int reimbursementTicketID,  int managerID, String status) {
         ReimbursementTicketDaoInterface rbDao = new ReimbursementTicketDao();
